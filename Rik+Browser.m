@@ -27,7 +27,8 @@
 	      columnSize: (NSSize)columnSize
 {
   NSBrowser *browser = (NSBrowser *)view;
-  NSRect bounds = [view bounds];
+  // TS: unused
+  // NSRect bounds = [view bounds];
 
   // Load the first column if not already done
   if (![browser isLoaded])

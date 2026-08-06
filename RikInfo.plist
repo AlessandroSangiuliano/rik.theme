@@ -9,7 +9,8 @@
     	GSThemeDetails = "A Theme for GNUstep";
     	GSThemeDomain = {
 		      GSBackHandlesWindowDecorations = NO;
-		      NSMenuInterfaceStyle = NSMacintoshInterfaceStyle;
+		      // NSMenuInterfaceStyle = NSMacintoshInterfaceStyle;
+		      NSMenuInterfaceStyle = GSWindowMakerInterfaceStyle;
 		      RikMenuBarTransparency = 0.95;
 		      MenuShouldShowIcon = YES;
     		      };

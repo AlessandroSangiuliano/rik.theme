@@ -63,7 +63,8 @@
   NSMenuView *menuView = (NSMenuView *)view;
   NSRect      bounds = [view bounds];
 
-  NSRect r = NSIntersectionRect(bounds, rect);
+  // TS: unused
+  // NSRect r = NSIntersectionRect(bounds, rect);
   NSRectFillUsingOperation(bounds, NSCompositeClear);
   NSBezierPath * menuPath;
   NSColor *borderColor = [self menuBorderColor];
@@ -116,10 +117,12 @@
                          dirtyRect: (NSRect)dirtyRect
                         horizontal: (BOOL)horizontal
 {
-  NSString  *name = horizontal ? GSMenuHorizontalBackground :
-    GSMenuVerticalBackground;
+  // TS: unused
+  // NSString  *name = horizontal ? GSMenuHorizontalBackground :
+  //   GSMenuVerticalBackground;
 
-  NSRectEdge sides[4] = { NSMinXEdge, NSMaxYEdge, NSMaxXEdge, NSMinYEdge };
+  // TS: unused
+  // NSRectEdge sides[4] = { NSMinXEdge, NSMaxYEdge, NSMaxXEdge, NSMinYEdge };
 
 
   [[self menuBackgroundColor] setFill];
@@ -141,7 +144,8 @@
 {
 
 
-  NSColor * backgroundColor = [self menuItemBackgroundColor];
+  // TS: unused
+  // NSColor * backgroundColor = [self menuItemBackgroundColor];
   NSColor* selectedBackgroundColor1 = [NSColor colorWithCalibratedRed: 0.392 green: 0.533 blue: 0.953 alpha: 1];
   NSColor* selectedBackgroundColor2 = [NSColor colorWithCalibratedRed: 0.165 green: 0.373 blue: 0.929 alpha: 1];
 

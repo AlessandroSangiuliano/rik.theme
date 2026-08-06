@@ -1,13 +1,23 @@
 #include "Rik.h"
 
 @interface NSBrowserCell(RikTheme)
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView *)controlView;
 @end
+
+@implementation Rik(NSBrowserCell)
+- (void) _overrideNSBrowserCellMethod_drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView *)controlView {
+  RIKLOG(@"_overrideNSBrowserCellMethod_drawInteriorWithFrame:inView:");
+  NSBrowserCell *xself = (NSBrowserCell*)self;
+  [xself RIKdrawInteriorWithFrame:cellFrame inView:controlView];
+}
+@end
+
 @implementation NSBrowserCell(RikTheme)
 
 /*
  * Displaying
  */
-- (void) drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView *)controlView
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView *)controlView
 {
   NSRect	title_rect = cellFrame;
   NSImage	*branch_image = nil;

@@ -8,6 +8,73 @@
 {
   scroller_arrow_type = t;
 }
+// TS: 2024-12-31
+// An original version of this file apparently invoked this method
+// from NSButtonCell.
+// However, more modern compilers do not allow access from outside of the class.
+// The solution is to copy this method from NSButtonCell and then
+// modified slightly to use accessors instead of instance variables.
+
+- (GSThemeControlState) themeControlState
+{
+  unsigned mask;
+  GSThemeControlState buttonState = GSThemeNormalState;
+
+  // set the mask
+  //  if (_cell.is_highlighted)
+  if ([self isHighlighted] == YES)
+    {
+      mask = _highlightsByMask;
+      // if (_cell.state)
+      if ([self state] != 0)
+        {
+          mask &= ~_showAltStateMask;
+        }
+    }
+  // else if (_cell.state)
+  else if ([self state] != 0)
+    mask = _showAltStateMask;
+  else
+    mask = NSNoCellMask;
+
+  /* Determine the background color. 
+     We draw when there is a border or when highlightsByMask
+     is NSChangeBackgroundCellMask or NSChangeGrayCellMask,
+     as required by our nextstep-like look and feel.  */
+  if (mask & (NSChangeGrayCellMask | NSChangeBackgroundCellMask))
+    {
+      buttonState = GSThemeHighlightedState;
+    }
+
+  /* Pushed in buttons contents are displaced to the bottom right 1px.  */
+  if (mask & NSPushInCellMask)
+    {
+      buttonState = GSThemeSelectedState;
+    }
+
+  if (_cell.is_disabled && buttonState != GSThemeHighlightedState)
+    {
+      buttonState = GSThemeDisabledState;
+    }
+
+  /* If we are first responder, change to the corresponding
+     first responder state. Note that GSThemeDisabledState
+     doesn't have a first responder variant, currently. */
+  if (_cell.shows_first_responder
+      && [[[self controlView] window] firstResponder] == [self controlView]
+      && [self controlView] != nil)
+    {
+      if (buttonState == GSThemeSelectedState)
+	buttonState = GSThemeSelectedFirstResponderState;
+      else if (buttonState == GSThemeHighlightedState)
+	buttonState = GSThemeHighlightedFirstResponderState;
+      else if (buttonState == GSThemeNormalState)
+	buttonState = GSThemeFirstResponderState;
+    }
+
+  return buttonState;
+}
+
 - (void) drawBezelWithFrame: (NSRect)cellFrame inView: (NSView *)controlView
 {
   GSThemeControlState buttonState = [self themeControlState];

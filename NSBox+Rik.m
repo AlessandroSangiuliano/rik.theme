@@ -6,9 +6,31 @@
 
 #import "Rik.h"
 
+@interface NSBox (RikTheme)
+- (void) RIKdrawRect: (NSRect)rect;
+@end
+
+@interface NSBox (Private)
+- (NSRect) RIKcalcSizesAllowingNegative: (BOOL)aFlag;
+@end
+
+@implementation Rik(NSBox)
+- (void) _overrideNSBoxMethod_drawRect: (NSRect)rect {
+  RIKLOG(@"_overrideNSBoxMethod_drawRect:");
+  NSBox* xself = (NSBox*)self;
+  [xself RIKdrawRect:rect];
+}
+
+- (NSRect) _overrideNSBoxMethod_calcSizesAllowingNegative: (BOOL)aFlag {
+  RIKLOG(@"_overrideNSBoxMethod_calcSizesAllowingNegative:");
+  NSBox* xself = (NSBox*)self;
+  return [xself RIKcalcSizesAllowingNegative:aFlag];
+}
+@end
+
 @implementation NSBox (RikTheme)
 
-- (void) drawRect: (NSRect)rect
+- (void) RIKdrawRect: (NSRect)rect
 {
 	rect = NSIntersectionRect(_bounds, rect);
 	[self setBorderWidth: 100.0];
@@ -24,7 +46,7 @@
 
 @implementation NSBox (Private)
 
-- (NSRect) calcSizesAllowingNegative: (BOOL)aFlag
+- (NSRect) RIKcalcSizesAllowingNegative: (BOOL)aFlag
 {
   GSTheme	*theme = [GSTheme theme];
   NSRect r = NSZeroRect;

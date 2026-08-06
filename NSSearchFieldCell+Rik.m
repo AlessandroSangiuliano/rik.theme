@@ -10,12 +10,78 @@
 
 #define ICON_WIDTH	16
 
+@interface NSSearchFieldCell (RikTheme)
+- (void) RIKdrawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView;
+- (NSRect) RIKsearchTextRectForBounds: (NSRect)rect;
+- (void) _RIKdrawBorderAndBackgroundWithFrame: (NSRect)cellFrame
+				       inView: (NSView*)controlView;
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView;
+- (void) _RIKdrawEditorWithFrame: (NSRect)cellFrame
+			  inView: (NSView *)controlView;
+- (NSRect) RIKtitleRectForBounds: (NSRect)theRect;
+- (NSRect) RIKsearchButtonRectForBounds: (NSRect)rect;
+- (NSRect) RIKcancelButtonRectForBounds: (NSRect)rect;
+@end
+
+@implementation Rik(NSSearchFieldCell)
+- (void) _overrideNSSearchFieldCellMethod_drawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_drawWithFrame:inView");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  [xself RIKdrawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView];
+}
+
+- (NSRect) _overrideNSSearchFieldCellMethod_searchTextRectForBounds: (NSRect)rect {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_searchTextRectForBounds:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  return [xself RIKsearchTextRectForBounds:rect];
+}
+
+- (void) _overrideNSSearchFieldCellMethod__drawBorderAndBackgroundWithFrame: (NSRect)cellFrame
+								     inView: (NSView*)controlView {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod__drawBorderAndBackgroundWithFrame:inView:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  [xself _RIKdrawBorderAndBackgroundWithFrame:cellFrame inView:controlView];
+}
+
+- (void) _overrideNSSearchFieldCellMethod_drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_drawInteriorWithFrame:inView:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  [xself RIKdrawInteriorWithFrame:cellFrame inView:controlView];
+}
+
+- (void) _overrideNSSearchFieldCellMethod__drawEditorWithFrame: (NSRect)cellFrame
+							inView: (NSView *)controlView {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod__drawEditorWithFrame:inView:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  [xself _RIKdrawEditorWithFrame:cellFrame inView:controlView];
+}
+
+- (NSRect) _overrideNSSearchFieldCellMethod_titleRectForBounds: (NSRect)theRect {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_titleRectForBounds:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  return [xself RIKtitleRectForBounds:theRect];
+}
+
+- (NSRect) _overrideNSSearchFieldCellMethod_searchButtonRectForBounds: (NSRect)rect {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_searchButtonRectForBounds:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  return [xself RIKsearchButtonRectForBounds:rect];  
+}
+
+- (NSRect) _overrideNSSearchFieldCellMethod_cancelButtonRectForBounds: (NSRect)rect {
+  RIKLOG(@"_overrideNSSearchFieldCellMethod_cancelButtonRectForBounds:");
+  NSSearchFieldCell *xself = (NSSearchFieldCell*)self;
+  return [xself RIKcancelButtonRectForBounds:rect];
+}
+
+@end
 
 @implementation NSSearchFieldCell (RikTheme)
 
-- (void) drawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+- (void) RIKdrawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
 {
-  NSRect frame = cellFrame;
+  // TS: unused
+  // NSRect frame = cellFrame;
   [super drawWithFrame: [self searchTextRectForBounds: cellFrame ]
 	 inView: controlView];
  [_search_button_cell drawWithFrame: [self searchButtonRectForBounds: cellFrame] inView: controlView];
@@ -26,7 +92,7 @@
 
 /* This method put the "x" cell inside the Text cell */
 
-- (NSRect) searchTextRectForBounds: (NSRect)rect
+- (NSRect) RIKsearchTextRectForBounds: (NSRect)rect
 {
 	NSRect search, text, part;
 
@@ -47,7 +113,7 @@
 	return text;
 }
 
-- (void) _drawBorderAndBackgroundWithFrame: (NSRect)cellFrame
+- (void) _RIKdrawBorderAndBackgroundWithFrame: (NSRect)cellFrame
                                     inView: (NSView*)controlView
 {
 
@@ -90,7 +156,7 @@
   [fillGradient drawInBezierPath: fillPath angle: 90];
 }
 
-- (void) drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
 {
   if (_cell.in_editing)
    [self _drawEditorWithFrame: cellFrame inView: controlView];
@@ -108,7 +174,7 @@
     }
 }
 
-- (void) _drawEditorWithFrame: (NSRect)cellFrame
+- (void) _RIKdrawEditorWithFrame: (NSRect)cellFrame
 		       inView: (NSView *)controlView
 {
   if ([controlView isKindOfClass: [NSControl class]])
@@ -129,7 +195,7 @@
     }
 }
 
-- (NSRect) titleRectForBounds: (NSRect)theRect
+- (NSRect) RIKtitleRectForBounds: (NSRect)theRect
 {
   if (_cell.type == NSTextCellType)
     {
@@ -153,7 +219,7 @@
     }
 }
 
-- (NSRect) searchButtonRectForBounds: (NSRect)rect;
+- (NSRect) RIKsearchButtonRectForBounds: (NSRect)rect
 {
   NSRect search, part;
   NSDivideRect(rect, &search, &part, ICON_WIDTH, NSMinXEdge);
@@ -163,7 +229,7 @@
 }
 
 
-- (NSRect) cancelButtonRectForBounds: (NSRect)rect
+- (NSRect) RIKcancelButtonRectForBounds: (NSRect)rect
 {
   NSRect part, clear;
 

@@ -90,7 +90,8 @@
 
 - (NSCell*) cellForScrollerKnobSlot: (BOOL)horizontal
 {
-  GSDrawTiles   		*tiles;
+  // TS: unused
+  // GSDrawTiles   		*tiles;
   RikScrollerKnobSlotCell	*cell;
   NSColor			*color;
   NSString      		*name;
@@ -104,7 +105,8 @@
       name = GSScrollerVerticalSlot;
     }
 
-  tiles = [self tilesNamed: name state: GSThemeNormalState];
+  // TS: unused
+  // tiles = [self tilesNamed: name state: GSThemeNormalState];
   color = [self colorNamed: name state: GSThemeNormalState];
 
   cell = [RikScrollerKnobSlotCell new];

@@ -1,23 +1,32 @@
 #include "Rik.h"
 
-@interface NSSegmentedCell(RikTheme)
+// @interface NSSegmentedCell(RikTheme)
+@interface Rik(NSSegmentedCell)
 @end
-@implementation NSSegmentedCell(RikTheme)
+@implementation Rik(NSSegmentedCell)
 
 
-- (NSColor*) textColor
+// - (NSColor*) textColor
+- (NSColor*) _overrideNSSegmentedCellMethod_textColor
 {
+  RIKLOG(@"_overrideNSSegmentedCellMethod_textColor");
   //IT DOES NOT WORKS
-  if(_cell.state == GSThemeSelectedState)
+  NSSegmentedCell *xself = (NSSegmentedCell*) self;
+  
+  if([xself state] == GSThemeSelectedState)
     return [NSColor whiteColor];
-  if (_cell.is_disabled)
+  if ([xself isEnabled] == NO)
     return [NSColor disabledControlTextColor];
   else
     return [NSColor controlTextColor];
 }
-- (void) _drawBorderAndBackgroundWithFrame: (NSRect)cellFrame
+// - (void) _drawBorderAndBackgroundWithFrame: (NSRect)cellFrame
+//                                     inView: (NSView*)controlView
+- (void) _overrideNSSegmentedCellMethod__drawBorderAndBackgroundWithFrame: (NSRect)cellFrame
                                     inView: (NSView*)controlView
 {
+  RIKLOG(@"_overrideNSSegmentedCellMethod__drawBorderAndBackgroundWithFrame");
+  NSSegmentedCell *xself = (NSSegmentedCell*) self;
   CGFloat radius = 4;
   cellFrame = NSInsetRect(cellFrame, 0.5, 0.5);
   NSColor* strokeColorButton = [Rik controlStrokeColor];
@@ -28,7 +37,7 @@
   [roundedRectanglePath setLineWidth: 1];
   [roundedRectanglePath stroke];
   NSInteger i;
-  NSUInteger count = [_items count];
+  NSUInteger count = [xself segmentCount];
   NSRect frame = cellFrame;
   NSRect controlFrame = [controlView frame];
 
@@ -37,7 +46,7 @@
   CGFloat offsetX = 0;
   for (i = 0; i < count-1;i++)
     {
-      frame.size.width = [[_items objectAtIndex: i] width];
+      frame.size.width = [xself widthForSegment: i];
       if(frame.size.width == 0.0)
         {
           frame.size.width = (controlFrame.size.width - frame.origin.x) / (count);
@@ -49,13 +58,16 @@
     }
   [linesPath stroke];
 }
-- (void) drawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+// - (void) drawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+- (void) _overrideNSSegmentedCellMethod_drawWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
 {
+  RIKLOG(@"_overrideNSSegmentedCellMethod_drawWithFrame");
+  NSCell *xself = (NSCell*) self;
   if (NSIsEmptyRect(cellFrame))
     return;
 // i want to draw the border for last
-  [self drawInteriorWithFrame: cellFrame inView: controlView];
-  [self _drawBorderAndBackgroundWithFrame: cellFrame inView: controlView];
-  [self _drawFocusRingWithFrame: cellFrame inView: controlView];
+  [xself drawInteriorWithFrame: cellFrame inView: controlView];
+  [xself _drawBorderAndBackgroundWithFrame: cellFrame inView: controlView];
+  [xself _drawFocusRingWithFrame: cellFrame inView: controlView];
 }
 @end

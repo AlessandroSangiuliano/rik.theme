@@ -102,18 +102,6 @@ NSString * const kRikPulseProgressKey = @"kRikPulseProgressKey";
   [roundedRectanglePath stroke];
 }
 
-- (void) drawPathButton: (NSBezierPath*) path
-                     in: (NSCell*)cell
-			            state: (GSThemeControlState) state
-{
-  NSColor	*backgroundColor = [self buttonColorInCell: cell forState: state];
-  NSColor* strokeColorButton = [Rik controlStrokeColor];
-  NSGradient* buttonBackgroundGradient = [self _bezelGradientWithColor: backgroundColor];
-  [buttonBackgroundGradient drawInBezierPath: path angle: -90];
-  [strokeColorButton setStroke];
-  [path setLineWidth: 1];
-  [path stroke];
-}
 - (void) _drawRoundBezel: (NSRect)cellFrame withColor: (NSColor*)backgroundColor
 {
   [self _drawRoundBezel: cellFrame withColor: backgroundColor andRadius: 4];

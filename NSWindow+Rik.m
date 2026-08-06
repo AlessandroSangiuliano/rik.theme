@@ -88,16 +88,32 @@
 
 - (void)windowDidResignKey:(NSNotification *)notification
 {
-    [animation stopAnimation];
+      [animation stopAnimation];
+}
+
+// TS: added this method
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+      [animation startAnimation];
 }
 
 @end
-@implementation NSWindow(RikTheme)
 
-+ (NSButton *) standardWindowButton: (NSWindowButton)button
+// TS: forward dec
+@interface NSWindow(RikTheme)
+- (void) RIKsetDefaultButtonCell: (NSButtonCell *)aCell;
+@end
+
+@implementation Rik(NSWindow)
+
+// NSWindow.m standardWindowButton:forStyleMask: defers to the theme which
+// implements this method (in the theme class).
+- (NSButton *) standardWindowButton: (NSWindowButton)button
                        forStyleMask: (NSUInteger) mask
 {
   RikWindowButton *newButton;
+
+  RIKLOG(@"NSWindow+Rik standardWindowButton:forStyleMask:");
 
   switch (button)
     {
@@ -142,10 +158,20 @@
   [newButton setTag: button];
   return AUTORELEASE(newButton);
 }
-- (void) setDefaultButtonCell: (NSButtonCell *)aCell
+
+- (void) _overrideNSWindowMethod_setDefaultButtonCell: (NSButtonCell *)aCell {
+  RIKLOG(@"_overrideNSWindowMethod_setDefaultButtonCell:");
+  NSWindow *xself = (NSWindow*)self;
+  [xself RIKsetDefaultButtonCell:aCell];
+}
+@end
+
+@implementation NSWindow(RikTheme)
+
+- (void) RIKsetDefaultButtonCell: (NSButtonCell *)aCell
 {
   ASSIGN(_defaultButtonCell, aCell);
-  _f.default_button_cell_key_disabled = NO;
+  [self enableKeyEquivalentForDefaultButtonCell];
 
   [aCell setKeyEquivalent: @"\r"];
   [aCell setKeyEquivalentModifierMask: 0];
@@ -155,6 +181,7 @@
   [self setDelegate:animationcontroller];
   [animationcontroller startPulse];
 }
+
 - (void) animateDefaultButton: (id)sender
 {
 }

@@ -14,7 +14,8 @@
     NSColor * c = [[NSColor controlBackgroundColor] shadowWithLevel: 0.1];
     NSGradient* normalButtongradient = [self _bezelGradientWithColor: c];
 
-    NSColor* buttonStroke = [Rik controlStrokeColor];
+    // TS: unused
+    // NSColor* buttonStroke = [Rik controlStrokeColor];
     NSColor* buttonFill = [NSColor colorWithCalibratedRed: 0.58 green: 0.58 blue: 0.58 alpha: 1];
     NSColor* buttonFillLight = [NSColor colorWithCalibratedRed: 0.663 green: 0.663 blue: 0.663 alpha: 1];
 

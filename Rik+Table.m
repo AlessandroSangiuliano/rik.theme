@@ -8,19 +8,6 @@
 @implementation Rik(RikTable)
 
 
-typedef enum {
-  GSTabSelectedLeft,
-  GSTabSelectedRight,
-  GSTabSelectedToUnSelectedJunction,
-  GSTabSelectedFill,
-  GSTabUnSelectedLeft,
-  GSTabUnSelectedRight,
-  GSTabUnSelectedToSelectedJunction,
-  GSTabUnSelectedJunction,
-  GSTabUnSelectedFill,
-  GSTabBackgroundFill
-} GSTabPart;
-
 - (NSRect) tableHeaderCellDrawingRectForBounds: (NSRect)theRect
 {
   NSSize borderSize;
@@ -79,7 +66,8 @@ typedef enum {
                       inView: (NSView *)controlView
                        state: (GSThemeControlState)state
 {
-      NSRect rect;
+      // TS: unused
+      // NSRect rect;
 
       // Leave a 1pt thick horizontal line underneath the header
       if (![controlView isFlipped])

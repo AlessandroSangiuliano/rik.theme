@@ -1,16 +1,25 @@
 #import <GNUstepGUI/GSWindowDecorationView.h>
 #import <GNUstepGUI/GSTheme.h>
+#import "Rik.h"
 
 #define TITLEBAR_BUTTON_SIZE 15
 #define TITLEBAR_PADDING_LEFT 10.5
 #define TITLEBAR_PADDING_RIGHT 10.5
 #define TITLEBAR_PADDING_TOP 5.5
 @interface GSStandardWindowDecorationView(RikTheme)
+- (void) RIKupdateRects;
+@end
 
+@implementation Rik(GSStandardWindowDecorationView)
+- (void) _overrideGSStandardWindowDecorationViewMethod_updateRects {
+  GSStandardWindowDecorationView* xself = (GSStandardWindowDecorationView*)self;
+  RIKLOG(@"GSStandardDecorationView+Rik updateRects");
+  [xself RIKupdateRects];
+}
 @end
 
 @implementation GSStandardWindowDecorationView(RikTheme)
-- (void) updateRects
+- (void) RIKupdateRects
 {
   GSTheme *theme = [GSTheme theme];
   if (hasTitleBar)

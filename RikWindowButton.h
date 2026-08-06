@@ -7,7 +7,8 @@
 }
 
 - (void) setBaseColor: (NSColor*)c;
-+ (void) initialize;;
+// TS: undefined
+// + (void) initialize;;
 
 
 @end

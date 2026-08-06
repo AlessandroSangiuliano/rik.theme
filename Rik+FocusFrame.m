@@ -61,7 +61,8 @@
     }
   else if([view class] == [NSMatrix class])
     {
-      NSSize size = [(NSMatrix*) view cellSize];
+      // TS: unused
+      // NSSize size = [(NSMatrix*) view cellSize];
       NSCell* selectedCell = [(NSMatrix*) view selectedCell];
       NSUInteger row = [(NSMatrix*)view selectedRow];
       NSUInteger col = [(NSMatrix*)view selectedColumn];

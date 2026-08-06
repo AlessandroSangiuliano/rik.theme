@@ -6,9 +6,21 @@
 
 #import "Rik.h"
 
+@interface NSCell(RikTheme)
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView;
+@end
+
+@implementation Rik(NSCell)
+- (void) _overrideNSCellMethod_drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView {
+  RIKLOG(@"_overrideNSCellMethod_drawInteriorWithFrame:inView");
+  NSCell *xself = (NSCell*) self;
+  [xself RIKdrawInteriorWithFrame:cellFrame inView:controlView];
+}
+@end
+
 @implementation NSCell(RikTheme)
 
-- (void) drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
 {
   NSRect drawingRect = [self drawingRectForBounds: cellFrame];
 

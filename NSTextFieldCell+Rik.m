@@ -12,9 +12,62 @@
  * The Cell and the text box are not aligned on the first click.
  */
 
+@interface NSTextFieldCell (RikTheme)
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView;
+- (void) RIKselectWithFrame: (NSRect)aRect
+                  inView: (NSView*)controlView
+                  editor: (NSText*)textObject
+                delegate: (id)anObject
+                   start: (NSInteger)selStart
+                  length: (NSInteger)selLength;
+- (void) RIKeditWithFrame: (NSRect)aRect
+                inView: (NSView*)controlView
+                editor: (NSText*)textObject
+              delegate: (id)anObject
+                 event: (NSEvent*)theEvent;
+@end
+
+@implementation Rik(NSTextFieldCell)
+- (void) _overrideNSTextFieldCellMethod_drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView {
+  RIKLOG(@"_overrideNSTextFieldCellMethod_drawInteriorWithFrame:inView:");
+  NSTextFieldCell *xself = (NSTextFieldCell*)self;
+  [xself RIKdrawInteriorWithFrame:cellFrame inView:controlView];
+}
+
+- (void) _overrrideNSTextFieldCellMethod_selectWithFrame: (NSRect)aRect
+                  inView: (NSView*)controlView
+                  editor: (NSText*)textObject
+                delegate: (id)anObject
+                   start: (NSInteger)selStart
+		  length: (NSInteger)selLength {
+  RIKLOG(@"_overrrideNSTextFieldCellMethod_selectWithFrame::::::");
+  NSTextFieldCell *xself = (NSTextFieldCell*)self;
+  [xself selectWithFrame:aRect
+		  inView:controlView
+		  editor:textObject
+		delegate:anObject
+		   start:selStart
+		  length:selLength];
+}
+- (void) _overrideNSTextFieldCellMethod_editWithFrame: (NSRect)aRect
+                inView: (NSView*)controlView
+                editor: (NSText*)textObject
+              delegate: (id)anObject
+		event: (NSEvent*)theEvent {
+  RIKLOG(@"_overrideNSTextFieldCellMethod_editWithFrame:");
+  NSTextFieldCell *xself = (NSTextFieldCell*)self;
+  [xself editWithFrame:aRect
+		inView:controlView
+		editor:textObject
+	      delegate:anObject
+		 event:theEvent];
+}
+
+@end
+
 @implementation NSTextFieldCell (RikTheme)
 
-- (void) drawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
+- (void) RIKdrawInteriorWithFrame: (NSRect)cellFrame inView: (NSView*)controlView
 {
 	NSRect titleRect;
 	cellFrame.origin.y -= 1;
@@ -62,7 +115,7 @@ titleRect.size.height += 2;
 // The cell needs to be asjusted also when is selected or edited
 
 
-- (void) selectWithFrame: (NSRect)aRect
+- (void) RIKselectWithFrame: (NSRect)aRect
 
                   inView: (NSView*)controlView
                   editor: (NSText*)textObject
@@ -85,7 +138,7 @@ titleRect.size.height += 2;
 	}
 }
 
-- (void) editWithFrame: (NSRect)aRect
+- (void) RIKeditWithFrame: (NSRect)aRect
                 inView: (NSView*)controlView
                 editor: (NSText*)textObject
               delegate: (id)anObject

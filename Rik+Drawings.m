@@ -25,7 +25,8 @@ NSRoundRectFill(NSRect r, float radius)
 
   NSColor* baseColorLight = [baseColor highlightWithLevel: 0.8];
   NSColor* baseColorLight2 = [baseColor highlightWithLevel: 0.5];
-  NSColor* baseColorShadow = [baseColor shadowWithLevel: 0.1];
+  // TS: unusued
+  // NSColor* baseColorShadow = [baseColor shadowWithLevel: 0.1];
 
   NSGradient* gradient = [[NSGradient alloc] initWithColorsAndLocations:
       baseColorLight, 0.0,
@@ -41,7 +42,8 @@ NSRoundRectFill(NSRect r, float radius)
 
   NSColor* baseColorLight = [baseColor highlightWithLevel: 0.8];
   NSColor* baseColorLight2 = [baseColor highlightWithLevel: 0.5];
-  NSColor* baseColorShadow = [baseColor shadowWithLevel: 0.1];
+  // TS: unused
+  // NSColor* baseColorShadow = [baseColor shadowWithLevel: 0.1];
 
   return [[NSGradient alloc] initWithColorsAndLocations:
                                             baseColorLight, 0.0,
@@ -133,13 +135,16 @@ NSRoundRectFill(NSRect r, float radius)
 - (NSRect) drawInnerGrayBezel: (NSRect)border withClip: (NSRect)clip
 {
   //TODO use these colors...
+#if 0 // TS: all unused
   NSColor *black = [NSColor controlDarkShadowColor];
   NSColor *dark = [NSColor controlShadowColor];
   NSColor *light = [NSColor controlColor];
   NSColor *white = [NSColor controlLightHighlightColor];
   NSColor *colors[] = {white, white, dark, dark,
-		       light, light, black, black};
+  		       light, light, black, black};
+
   NSRect rect;
+#endif
 
   //// instead of these Color Declarations
   NSColor* emptyColor = [NSColor colorWithCalibratedRed: 0.8
